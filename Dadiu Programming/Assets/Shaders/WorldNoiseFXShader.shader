@@ -73,13 +73,15 @@ float noise( float3 x )
   //Our Fragment Shader
   fixed4 frag (v2f i) : COLOR{
   	float3 wsPos = compute_world_space(i);
-	//wsPos *= noise(1) * _SinTime;
-	wsPos *= noise(_Time);
+	wsPos *= noise(0.1f) * _SinTime;
+	//wsPos *= noise(_Time);
 
    		 
 	fixed4 orgCol = tex2D(_MainTex, i.uv); //Get the orginal rendered color 
 	
-   	fixed4 col = fixed4(orgCol.xyz *  wsPos * (1 + sin(wsPos * 10 )), 1);
+   	//fixed4 col = fixed4(orgCol.xyz * wsPos * (1 + sin(wsPos * 10 )), 1);
+
+	fixed4 col = fixed4(orgCol.xyz * (1 + sin(wsPos * 10)), 1);
      
    return col;
   }
