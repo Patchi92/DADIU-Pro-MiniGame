@@ -9,14 +9,20 @@ class TrackQueue
     public int trackLength = 100;
     public int trackDificulty = 1;
     public int currentTrackLength = 0;
+    public int pickUpCount = 4;
 
     private Queue<Curbe> turnQueue;
-
     private int curveDivisor = 0;
 
     public TrackQueue()
     {
 
+
+
+    }
+
+    public void StartGenerating()
+    {
         trackDificulty += 3;
         this.turnQueue = new Queue<Curbe>();
         this.curveDivisor = (trackLength / trackDificulty);
@@ -27,10 +33,9 @@ class TrackQueue
 
         generatePolygon();
 
- 
-        
-    }
 
+
+    }
     private void generateCurves()
     {
         //hold a list of generated curbes

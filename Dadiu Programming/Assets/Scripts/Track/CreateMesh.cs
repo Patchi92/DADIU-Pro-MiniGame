@@ -4,12 +4,18 @@ using System.Collections.Generic;
 
 public class CreateMesh : MonoBehaviour {
 
-		private List<Vector3> vertices = new List<Vector3>();
-		private List<Vector3> normals = new List<Vector3>();
-		private List<int> indices = new List<int>();
-		
-		
-		private void addTriangle(Vector3 p1, Vector3 p2, Vector3 p3){
+	private List<Vector3> vertices = new List<Vector3>();
+	private List<Vector3> normals = new List<Vector3>();
+	private List<int> indices = new List<int>();
+
+    public int trackLength = 100;
+    public int trackDificulty = 1;
+
+
+    private TrackQueue trackQueue;
+
+
+    private void addTriangle(Vector3 p1, Vector3 p2, Vector3 p3){
 			vertices.Add(p1);
 			vertices.Add(p2);
 			vertices.Add(p3);
@@ -105,7 +111,7 @@ public class CreateMesh : MonoBehaviour {
         return currentPos;
     }
 
-    private void generateMengerSponge(Vector3 pStart, Vector3 pEnd, int depth)
+    private void generateMengerSponge(Vector3 pStart, Vector3 pEnd)
     {
 
         int i = 0;
@@ -117,13 +123,12 @@ public class CreateMesh : MonoBehaviour {
         {
             currentPos = this.moveForward(currentPos);
         }
-        TrackQueue queue = new TrackQueue();
+        
 
 
-
-        for (i = 0; i < 100; i++)
+        for (i = 0; i < trackLength; i++)
         {
-            Curbe curbe = queue.GenerateNextMove();
+            Curbe curbe = trackQueue.GenerateNextMove();
             Debug.Log(curbe);
             switch (curbe)
             {
@@ -150,14 +155,13 @@ public class CreateMesh : MonoBehaviour {
     }
 
 
-    public int subdivisions;
 
-    Mesh CreateMengerSponge(int subdivisions)
+    Mesh CreateMengerSponge()
     {
 
 		vertices.Clear();
 		indices.Clear();
-		generateMengerSponge(Vector3.zero, Vector3.one, subdivisions);
+		generateMengerSponge(Vector3.zero, Vector3.one);
 		Mesh mesh = new Mesh();
 		mesh.vertices = vertices.ToArray();
 		mesh.normals = normals.ToArray();
@@ -167,6 +171,8 @@ public class CreateMesh : MonoBehaviour {
         Debug.Log(vertices.Count);
 		mesh.SetIndices(indices.ToArray(), MeshTopology.Triangles, 0);
 
+        
+
 
         return mesh;
 
@@ -174,6 +180,23 @@ public class CreateMesh : MonoBehaviour {
 
     void Start()
     {
-        GetComponent<MeshFilter>().mesh = CreateMengerSponge(subdivisions);
+        //set variables
+        trackQueue = new TrackQueue();
+        trackQueue.trackLength = trackLength;
+        trackQueue.trackDificulty = trackDificulty;
+
+        trackQueue.StartGenerating();
+
+        //no other way to access the method in pickupmanager ?????
+        GameObject pickUpManager = GameObject.Find("PickUpManager");
+        PickUpManager managerReference = (PickUpManager)pickUpManager.GetComponent(typeof(PickUpManager));
+        managerReference.Generate();
+
+        
+        Mesh mesh = CreateMengerSponge();
+        GetComponent<MeshFilter>().mesh = mesh;
+        MeshCollider meshc = gameObject.AddComponent(typeof(MeshCollider)) as MeshCollider;
+        meshc.sharedMesh = mesh;
+        
     }
 }
