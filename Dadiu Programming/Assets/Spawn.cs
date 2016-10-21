@@ -9,11 +9,10 @@ public class Spawn : MonoBehaviour {
     public int cars;
 
     public Transform[] startPos;
-    public int players;
 
 	// Use this for initialization
 	void Start () {
-        SpawnCars();
+       
 	}
 	
 	// Update is called once per frame
@@ -21,12 +20,12 @@ public class Spawn : MonoBehaviour {
 	
 	}
 
-    void SpawnCars ()
+    public void SpawnCars ()
     {
         Instantiate(player, startPos[0].position, Quaternion.identity);
-        players = players - 1;
+        cars = cars - 1;
 
-        for (int i = 0; i < players; i++)
+        for (int i = 0; i < cars; i++)
         {
             Instantiate(carAI, startPos[i + 1].position, Quaternion.identity);
         }

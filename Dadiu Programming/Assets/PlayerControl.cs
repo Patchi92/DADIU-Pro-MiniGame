@@ -6,6 +6,10 @@ public class PlayerControl : MonoBehaviour {
 
     Rigidbody carRigid;
     Transform carTransfrom;
+    Renderer rend;
+
+    public GameObject cam;
+    public Shader vertexAni;
 
     public float moveSpeed;
     public float reverseSpeed;
@@ -14,11 +18,15 @@ public class PlayerControl : MonoBehaviour {
     public float breakSpeed;
     public float maxSpeed;
     public float maxReverse;
+
+    public bool active;
     
     void Awake ()
     {
         carRigid = GetComponent<Rigidbody>();
         carTransfrom = GetComponent<Transform>();
+        rend = GetComponent<Renderer>();
+        active = false;
     }
     
 
@@ -29,59 +37,65 @@ public class PlayerControl : MonoBehaviour {
 
     void FixedUpdate()
     {
+        carRigid.velocity += new Vector3(0f, -2f, 0f);
 
-        carRigid.velocity = carTransfrom.forward * moveSpeed;
-
-        if (Input.GetKey(KeyCode.W))
+        if (active)
         {
+            carRigid.velocity = carTransfrom.forward * moveSpeed;
+            
 
-            if (moveSpeed < maxSpeed && moveSpeed >= -6 && moveSpeed < 10)
+            if (Input.GetKey(KeyCode.W))
             {
-                moveSpeed = moveSpeed + accelerationSpeed;
+
+                if (moveSpeed < maxSpeed && moveSpeed >= -6 && moveSpeed < 10)
+                {
+                    moveSpeed = moveSpeed + accelerationSpeed;
+                }
+
+                if (moveSpeed < maxSpeed && moveSpeed >= 10 && moveSpeed < 15)
+                {
+                    moveSpeed = moveSpeed + accelerationSpeed - 0.15f;
+                }
+
+                if (moveSpeed < maxSpeed && moveSpeed >= 15 && moveSpeed < 20)
+                {
+                    moveSpeed = moveSpeed + accelerationSpeed - 0.25f;
+                }
+
+
+
+            }
+            else
+            {
+                if (moveSpeed > 0f)
+                {
+                    moveSpeed = moveSpeed - accelerationReduce;
+                }
+
             }
 
-            if (moveSpeed < maxSpeed && moveSpeed >= 10 && moveSpeed < 15)
+            if (Input.GetKey(KeyCode.S))
             {
-                moveSpeed = moveSpeed + accelerationSpeed - 0.15f;
+                if (moveSpeed > maxReverse)
+                {
+                    moveSpeed = moveSpeed - breakSpeed;
+                }
             }
 
-            if (moveSpeed < maxSpeed && moveSpeed >= 15 && moveSpeed < 20)
+            if (Input.GetKey(KeyCode.A))
             {
-                moveSpeed = moveSpeed + accelerationSpeed - 0.25f;
+                carTransfrom.Rotate(0, -1f, 0);
             }
 
-
-
-        } else
-        {
-            if(moveSpeed > 0f)
+            if (Input.GetKey(KeyCode.D))
             {
-                moveSpeed = moveSpeed - accelerationReduce;
+                carTransfrom.Rotate(0, 1f, 0);
             }
-                 
-        }
 
-        if (Input.GetKey(KeyCode.S))
-        {
-            if (moveSpeed > maxReverse)
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                moveSpeed = moveSpeed - breakSpeed;
+                FunkyTime();
             }
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            carTransfrom.Rotate(0, -1f, 0);
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            carTransfrom.Rotate(0, 1f, 0);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //carRigid.velocity += new Vector3(0f, 10f, 0f);
         }
 
 
@@ -92,5 +106,19 @@ public class PlayerControl : MonoBehaviour {
 	
         
 
+    }
+
+    public void FunkyTime()
+    {
+        cam.GetComponent<ShaderCam>().funky = true;
+
+        rend.material.shader = vertexAni;
+        rend.material.SetFloat("_AnimSpeed", 100f);
+        rend.material.SetFloat("_AnimPowerX", 0.1f);
+        rend.material.SetFloat("_AnimPowerY", 0f);
+        rend.material.SetFloat("_AnimPowerZ", 0.1f);
+        rend.material.SetFloat("_AnimOffsetX", 10f);
+        rend.material.SetFloat("_AnimOffsetY", 10f);
+        rend.material.SetFloat("_AnimOffsetZ", 10f);
     }
 }

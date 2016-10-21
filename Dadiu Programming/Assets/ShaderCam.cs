@@ -5,15 +5,23 @@ public class ShaderCam : MonoBehaviour {
 
     public Material mat;
 
+    public bool funky;
+
+
+    void Awake()
+    {
+        funky = false;
+    }
 
 
     // Called by the camera to apply the image effect
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
-
-        mat.SetMatrix("_ViewProjectInverse", (GetComponent<Camera>().projectionMatrix * GetComponent<Camera>().worldToCameraMatrix).inverse);
-
-        //mat is the material containing your shader
-        Graphics.Blit(source, destination, mat);
+        if(funky)
+        {
+            mat.SetMatrix("_ViewProjectInverse", (GetComponent<Camera>().projectionMatrix * GetComponent<Camera>().worldToCameraMatrix).inverse);
+            Graphics.Blit(source, destination, mat);
+        }
+        
     }
 }
