@@ -6,14 +6,14 @@ Shader "learining/myShader/ - Vertex Animation"{
 		_Color ("Color Tint", Color) = (1.0,1.0,1.0,1.0)
 		_SpecColor ("Specular Color", Color) = (1.0,1.0,1.0,1.0)
 		_Shininess ("Shininess", Float) = 10.0
-		_AnimSpeed ("Animation Speed", Float) = 10.0
+		_AnimSpeed ("Animation Speed", Float) = 100.0
 		_AnimFreq ("Animation Frequency", Float) = 1.0
-		_AnimPowerX ("Animation Power X", Float) = 0.0
-		_AnimPowerY ("Animation Power Y", Float) = 0.1
-		_AnimPowerZ ("Animation Power Z", Float) = 0.0
+		_AnimPowerX ("Animation Power X", Float) = 0.2
+		_AnimPowerY ("Animation Power Y", Float) = 0.0
+		_AnimPowerZ ("Animation Power Z", Float) = 0.2
 		_AnimOffsetX ("Animation Offset X", Float) = 10.0
-		_AnimOffsetY ("Animation Offset Y", Float) = 0.0
-		_AnimOffsetZ ("Animation Offset Z", Float) = 0.0
+		_AnimOffsetY ("Animation Offset Y", Float) = 10.0
+		_AnimOffsetZ ("Animation Offset Z", Float) = 10.0
 	}
 	SubShader {
 		Pass {

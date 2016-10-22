@@ -7,14 +7,20 @@ public class LevelManager : MonoBehaviour {
     GameObject spawn;
     GameObject player;
     GameObject[] AI;
+    GameObject track;
 
     public GameObject countdown;
+    public GameObject speed;
+    public GameObject gear;
+
+    float showSpeed;
 
 
     
     void Awake ()
     {
         spawn = GameObject.FindGameObjectWithTag("Spawn");
+        track = GameObject.FindGameObjectWithTag("Track");
         
     }
 
@@ -25,11 +31,17 @@ public class LevelManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
-	}
+        showSpeed = player.GetComponent<PlayerControl>().moveSpeed;
+        showSpeed = (int)showSpeed;
+        speed.GetComponent<Text>().text = showSpeed.ToString();
+        gear.GetComponent<Text>().text = player.GetComponent<PlayerControl>().gear;
+
+    }
 
     IEnumerator StartRace()
     {
+       
+
         spawn.GetComponent<Spawn>().SpawnCars();
         player = GameObject.FindGameObjectWithTag("Player");
         AI = GameObject.FindGameObjectsWithTag("AI");

@@ -19,10 +19,11 @@ public class AI : MonoBehaviour {
 
     float moveSpeed;
     float accelerationSpeed;
-    float maxSpeed;
+    public float maxSpeed;
 
     Renderer rend;
     public Shader vertexAni;
+    public Shader standardShader;
 
     void Awake ()
     {
@@ -30,8 +31,8 @@ public class AI : MonoBehaviour {
         carRigid = gameObject.GetComponent<Rigidbody>();
         rend = GetComponent<Renderer>();
 
-        maxSpeed = 20;
-        accelerationSpeed = 0.3f;
+        //maxSpeed = 20;
+        accelerationSpeed = 0.8f;
 
         player = GameObject.FindGameObjectWithTag("Player");
         goal = GameObject.FindGameObjectWithTag("Goal");
@@ -53,19 +54,34 @@ public class AI : MonoBehaviour {
 
         if (passive)
         {
-            if (moveSpeed < maxSpeed && moveSpeed >= -6 && moveSpeed < 10)
+            if (moveSpeed < maxSpeed && moveSpeed >= -6 && moveSpeed < 5)
             {
                 moveSpeed = moveSpeed + accelerationSpeed;
             }
 
+            if (moveSpeed < maxSpeed && moveSpeed >= 5 && moveSpeed < 10)
+            {
+                moveSpeed = moveSpeed + accelerationSpeed - 0.35f;
+            }
+
             if (moveSpeed < maxSpeed && moveSpeed >= 10 && moveSpeed < 15)
             {
-                moveSpeed = moveSpeed + accelerationSpeed - 0.15f;
+                moveSpeed = moveSpeed + accelerationSpeed - 0.45f;
             }
 
             if (moveSpeed < maxSpeed && moveSpeed >= 15 && moveSpeed < 20)
             {
-                moveSpeed = moveSpeed + accelerationSpeed - 0.25f;
+                moveSpeed = moveSpeed + accelerationSpeed - 0.50f;
+            }
+
+            if (moveSpeed < maxSpeed && moveSpeed >= 20 && moveSpeed < 25)
+            {
+                moveSpeed = moveSpeed + accelerationSpeed - 0.55f;
+            }
+
+            if (moveSpeed < maxSpeed && moveSpeed >= 25 && moveSpeed < 30)
+            {
+                moveSpeed = moveSpeed + accelerationSpeed - 0.58f;
             }
 
             carAI.speed = moveSpeed;
@@ -80,19 +96,34 @@ public class AI : MonoBehaviour {
                 hostile = false;
             }
 
-            if (moveSpeed < maxSpeed && moveSpeed >= -6 && moveSpeed < 10)
+            if (moveSpeed < maxSpeed && moveSpeed >= -6 && moveSpeed < 5)
             {
                 moveSpeed = moveSpeed + accelerationSpeed;
             }
 
+            if (moveSpeed < maxSpeed && moveSpeed >= 5 && moveSpeed < 10)
+            {
+                moveSpeed = moveSpeed + accelerationSpeed - 0.35f;
+            }
+
             if (moveSpeed < maxSpeed && moveSpeed >= 10 && moveSpeed < 15)
             {
-                moveSpeed = moveSpeed + accelerationSpeed - 0.15f;
+                moveSpeed = moveSpeed + accelerationSpeed - 0.45f;
             }
 
             if (moveSpeed < maxSpeed && moveSpeed >= 15 && moveSpeed < 20)
             {
-                moveSpeed = moveSpeed + accelerationSpeed - 0.25f;
+                moveSpeed = moveSpeed + accelerationSpeed - 0.50f;
+            }
+
+            if (moveSpeed < maxSpeed && moveSpeed >= 20 && moveSpeed < 25)
+            {
+                moveSpeed = moveSpeed + accelerationSpeed - 0.55f;
+            }
+
+            if (moveSpeed < maxSpeed && moveSpeed >= 25 && moveSpeed < 30)
+            {
+                moveSpeed = moveSpeed + accelerationSpeed - 0.58f;
             }
 
             carAI.speed = moveSpeed;
@@ -103,6 +134,11 @@ public class AI : MonoBehaviour {
         {
             FunkyTime();
 
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            FunkyTimeStop();
         }
 
 
@@ -142,5 +178,11 @@ public class AI : MonoBehaviour {
         rend.material.SetFloat("_AnimOffsetX", 10f);
         rend.material.SetFloat("_AnimOffsetY", 10f);
         rend.material.SetFloat("_AnimOffsetZ", 10f);
+    }
+
+    public void FunkyTimeStop()
+    {
+        rend.material.shader = standardShader;
+
     }
 }
