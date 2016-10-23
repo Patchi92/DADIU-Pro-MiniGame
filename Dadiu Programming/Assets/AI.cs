@@ -25,6 +25,8 @@ public class AI : MonoBehaviour {
     public Shader vertexAni;
     public Shader standardShader;
 
+    public string position;
+
     void Awake ()
     {
         carAI = gameObject.GetComponent<NavMeshAgent>();

@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerControl : MonoBehaviour {
+public class PlayerControl : MonoBehaviour
+{
 
 
     Rigidbody carRigid;
@@ -24,21 +25,31 @@ public class PlayerControl : MonoBehaviour {
     public float maxReverse;
 
     public bool active;
-    
-    void Awake ()
+
+    public string position;
+
+    public int health;
+    public GameObject smoke;
+    public GameObject deathEffect;
+    bool death;
+
+    void Awake()
     {
         carRigid = GetComponent<Rigidbody>();
         carTransfrom = GetComponent<Transform>();
         rend = GetComponent<Renderer>();
         active = false;
-
+        death = true;
+        health = 100;
         gear = "N";
+        position = "1st";
     }
-    
 
-    void Start () {
-	    
-	}
+
+    void Start()
+    {
+
+    }
 
 
     void FixedUpdate()
@@ -48,7 +59,7 @@ public class PlayerControl : MonoBehaviour {
         if (active)
         {
             carRigid.velocity = carTransfrom.forward * moveSpeed;
-            
+
 
             if (Input.GetKey(KeyCode.W))
             {
@@ -99,7 +110,8 @@ public class PlayerControl : MonoBehaviour {
                     moveSpeed = moveSpeed - breakSpeed;
                     gear = "R";
                 }
-            } else
+            }
+            else
             {
                 if (moveSpeed > 0f)
                 {
@@ -138,9 +150,14 @@ public class PlayerControl : MonoBehaviour {
 
                 }
 
+                if((int)moveSpeed == 0)
+                {
+                    gear = "N";
+                }
+
             }
 
-          
+
 
             if (Input.GetKey(KeyCode.A))
             {
@@ -150,7 +167,7 @@ public class PlayerControl : MonoBehaviour {
                 {
                     moveSpeed = moveSpeed - turnSpeed;
                 }
-                
+
             }
 
             if (Input.GetKey(KeyCode.D))
@@ -172,15 +189,61 @@ public class PlayerControl : MonoBehaviour {
             {
                 FunkyTimeStop();
             }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                health -= 10;
+            }
         }
 
 
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-        
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        if (health < 100 && health > 50)
+        {
+            smoke.SetActive(false);
+        }
+
+        if (health <= 50 && health > 40)
+        {
+            smoke.SetActive(true);
+            smoke.GetComponent<ParticleSystem>().maxParticles = 1;
+        }
+
+        if (health <= 40 && health > 30)
+        {
+            smoke.GetComponent<ParticleSystem>().maxParticles = 2;
+        }
+
+        if (health <= 30 && health > 20)
+        {
+            smoke.GetComponent<ParticleSystem>().maxParticles = 4;
+        }
+
+        if (health <= 20 && health > 10)
+        {
+            smoke.GetComponent<ParticleSystem>().maxParticles = 6;
+        }
+
+        if (health <= 10 && health > 0)
+        {
+            smoke.GetComponent<ParticleSystem>().maxParticles = 10;
+        }
+
+        if (health <= 0)
+        {
+            if(death)
+            {
+                Instantiate(deathEffect, gameObject.transform.position, Quaternion.identity);
+                StartCoroutine("Death");
+                death = false;
+            }
+            
+        }
 
     }
 
@@ -208,4 +271,10 @@ public class PlayerControl : MonoBehaviour {
 
     }
 
+    IEnumerator Death()
+    {
+        yield return new WaitForSeconds(0.1f);
+        Destroy(gameObject);
+        yield return null;
+    }
 }
