@@ -7,6 +7,7 @@ public class AI : MonoBehaviour {
 
     NavMeshAgent carAI;
     Rigidbody carRigid;
+    public int AINumber;
 
     public GameObject goal;
 
@@ -27,6 +28,14 @@ public class AI : MonoBehaviour {
 
     public string position;
 
+    // Combat
+
+    public int health;
+    public GameObject smoke;
+    public GameObject deathEffect;
+    bool death;
+
+
     void Awake ()
     {
         carAI = gameObject.GetComponent<NavMeshAgent>();
@@ -35,11 +44,12 @@ public class AI : MonoBehaviour {
 
         //maxSpeed = 20;
         accelerationSpeed = 0.8f;
+        health = 100;
 
         player = GameObject.FindGameObjectWithTag("Player");
         goal = GameObject.FindGameObjectWithTag("Goal");
 
-        
+        death = true;
         passive = false;
         hostile = false;
     }
@@ -48,11 +58,11 @@ public class AI : MonoBehaviour {
 
         rend.material.color = new Color(Random.value, Random.value, Random.value, 1.0f);
 	}
-	
-	// Update is called once per frame
-	void FixedUpdate () {
 
-        carRigid.velocity += new Vector3(0f, -2f, 0f);
+    // Update is called once per frame
+    void FixedUpdate() {
+
+        //carRigid.velocity += new Vector3(0f, -2f, 0f);
 
         if (passive)
         {
@@ -90,7 +100,7 @@ public class AI : MonoBehaviour {
             carAI.SetDestination(goal.transform.position);
         }
 
-        if(hostile)
+        if (hostile)
         {
             if (Vector3.Distance(gameObject.transform.position, player.transform.position) > ignoreDistance)
             {
@@ -132,6 +142,55 @@ public class AI : MonoBehaviour {
             carAI.SetDestination(player.transform.position);
         }
 
+    }
+
+    void Update()
+    {
+
+        if (health < 100 && health > 50)
+        {
+            smoke.SetActive(false);
+        }
+
+        if (health <= 50 && health > 40)
+        {
+            smoke.SetActive(true);
+            smoke.GetComponent<ParticleSystem>().maxParticles = 1;
+        }
+
+        if (health <= 40 && health > 30)
+        {
+            smoke.GetComponent<ParticleSystem>().maxParticles = 2;
+        }
+
+        if (health <= 30 && health > 20)
+        {
+            smoke.GetComponent<ParticleSystem>().maxParticles = 4;
+        }
+
+        if (health <= 20 && health > 10)
+        {
+            smoke.GetComponent<ParticleSystem>().maxParticles = 6;
+        }
+
+        if (health <= 10 && health > 0)
+        {
+            smoke.GetComponent<ParticleSystem>().maxParticles = 10;
+        }
+
+        if (health <= 0)
+        {
+            if (death)
+            {
+                Instantiate(deathEffect, gameObject.transform.position, Quaternion.identity);
+                StartCoroutine("Death");
+                death = false;
+            }
+
+        }
+
+
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             FunkyTime();
@@ -143,8 +202,11 @@ public class AI : MonoBehaviour {
             FunkyTimeStop();
         }
 
-
     }
+
+
+
+
 
 
     void OnTriggerEnter(Collider other)
@@ -186,5 +248,12 @@ public class AI : MonoBehaviour {
     {
         rend.material.shader = standardShader;
 
+    }
+
+    IEnumerator Death()
+    {
+        yield return new WaitForSeconds(0.1f);
+        Destroy(gameObject);
+        yield return null;
     }
 }

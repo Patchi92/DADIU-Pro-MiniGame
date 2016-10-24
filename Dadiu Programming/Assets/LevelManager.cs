@@ -4,11 +4,15 @@ using System.Collections;
 
 public class LevelManager : MonoBehaviour {
 
+    // Spawn
     GameObject spawn;
     GameObject player;
     GameObject[] AI;
     GameObject track;
 
+    int AIcarNumber;
+
+    // UI
     public GameObject countdown;
     public GameObject position;
     public GameObject gameTimer;
@@ -30,6 +34,7 @@ public class LevelManager : MonoBehaviour {
         spawn = GameObject.FindGameObjectWithTag("Spawn");
         track = GameObject.FindGameObjectWithTag("Track");
         startTimer = false;
+        AIcarNumber = 0;
         
     }
 
@@ -81,7 +86,9 @@ public class LevelManager : MonoBehaviour {
         player.GetComponent<PlayerControl>().active = true;
         foreach(GameObject car in AI)
         {
+            ++AIcarNumber;
             car.GetComponent<AI>().Passive();
+            car.GetComponent<AI>().AINumber = AIcarNumber;
         }
         yield return new WaitForSeconds(1f);
         countdown.SetActive(false);

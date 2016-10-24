@@ -54,7 +54,7 @@ public class PlayerControl : MonoBehaviour
 
     void FixedUpdate()
     {
-        carRigid.velocity += new Vector3(0f, -2f, 0f);
+        //carRigid.velocity += new Vector3(0f, -2f, 0f);
 
         if (active)
         {
@@ -150,7 +150,7 @@ public class PlayerControl : MonoBehaviour
 
                 }
 
-                if((int)moveSpeed == 0)
+                if ((int)moveSpeed == 0)
                 {
                     gear = "N";
                 }
@@ -236,13 +236,13 @@ public class PlayerControl : MonoBehaviour
 
         if (health <= 0)
         {
-            if(death)
+            if (death)
             {
                 Instantiate(deathEffect, gameObject.transform.position, Quaternion.identity);
                 StartCoroutine("Death");
                 death = false;
             }
-            
+
         }
 
     }
@@ -277,4 +277,7 @@ public class PlayerControl : MonoBehaviour
         Destroy(gameObject);
         yield return null;
     }
+
+
+    
 }

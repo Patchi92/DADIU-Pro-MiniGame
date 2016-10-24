@@ -1,6 +1,3 @@
-// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
-// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
-
 Shader "learining/myShader/ - Vertex Animation"{
 	Properties {
 		_Color ("Color Tint", Color) = (1.0,1.0,1.0,1.0)
