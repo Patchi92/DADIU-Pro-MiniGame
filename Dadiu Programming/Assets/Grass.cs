@@ -34,7 +34,6 @@ public class Grass : MonoBehaviour {
 
         if (other.gameObject.tag == "AI")
         {
-            Debug.Log("Check");
             --other.gameObject.GetComponent<AI>().health;
         }
 

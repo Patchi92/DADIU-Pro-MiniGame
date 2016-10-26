@@ -67,13 +67,18 @@ public class Goal : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space))
         {
-            if (carInGoal == 8 || gameDone == true)
+            if (gameDone == true)
             {
-                Application.LoadLevel(0);
+                Application.LoadLevel(1);
             }
         }
 
-        if(carDestoryed == 7)
+        if (carInGoal == 8 && gameDone == true)
+        {
+            Application.LoadLevel(0);
+        }
+
+        if (carDestoryed == 7)
         {
             Application.LoadLevel(0);
         }

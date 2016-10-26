@@ -13,6 +13,12 @@ public class Collecter : MonoBehaviour {
 
     private int currentCounter = 0;
 
+    //adding stuff
+    GameObject[] AI;
+    GameObject[] roads;
+
+    bool reset;
+
     void Start()
     {
         powerUp1 = GameObject.Find("PowerUp 1").GetComponent<Image>();
@@ -23,6 +29,8 @@ public class Collecter : MonoBehaviour {
         sprites.Add(powerUp3);
 
 		playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
+        AI = GameObject.FindGameObjectsWithTag("AI");
+        roads = GameObject.FindGameObjectsWithTag("Road");
 
     }
     public void Update()
@@ -41,8 +49,24 @@ public class Collecter : MonoBehaviour {
 
 		if (collectibleQueue.Count == 0) {
 
-			playerControl.FunkyTimeStop ();
-		}
+            if(reset)
+            {
+                playerControl.FunkyTimeStop();
+
+                foreach (GameObject car in AI)
+                {
+                    car.GetComponent<AI>().FunkyTimeStop();
+                }
+
+                foreach (GameObject road in roads)
+                {
+                    road.GetComponent<Road>().FunkyTimeStop();
+                }
+
+                reset = false;
+            }
+			
+        }
 
 
     }
@@ -58,7 +82,20 @@ public class Collecter : MonoBehaviour {
             resetUIPowerUp();
             //Debug.Log(powerUp1.name);
 
-			playerControl.FunkyTime ();
+            reset = true;
+
+            playerControl.FunkyTime ();
+
+            
+            foreach (GameObject car in AI)
+            {
+                car.GetComponent<AI>().FunkyTime();
+            }
+
+            foreach (GameObject road in roads)
+            {
+                road.GetComponent<Road>().FunkyTime();
+            }
         }
     }
 

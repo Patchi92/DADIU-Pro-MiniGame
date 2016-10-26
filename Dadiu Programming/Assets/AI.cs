@@ -191,7 +191,7 @@ public class AI : MonoBehaviour {
         }
 
 
-
+        /*
         if (Input.GetKeyDown(KeyCode.Space))
         {
             FunkyTime();
@@ -202,6 +202,7 @@ public class AI : MonoBehaviour {
         {
             FunkyTimeStop();
         }
+        */
 
     }
 
