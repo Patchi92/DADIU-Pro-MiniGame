@@ -17,6 +17,8 @@ public class Collecter : MonoBehaviour {
     GameObject[] AI;
     GameObject[] roads;
 
+    public Sprite red;
+
     bool reset;
 
     void Start()
@@ -51,6 +53,8 @@ public class Collecter : MonoBehaviour {
 
             if(reset)
             {
+                AI = GameObject.FindGameObjectsWithTag("AI");
+
                 playerControl.FunkyTimeStop();
 
                 foreach (GameObject car in AI)

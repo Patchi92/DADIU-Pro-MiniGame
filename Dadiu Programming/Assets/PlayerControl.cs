@@ -199,7 +199,7 @@ public class PlayerControl : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.R))
             {
-                health -= 10;
+                //health -= 10;
             }
         }
 

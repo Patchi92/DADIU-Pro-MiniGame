@@ -32,11 +32,14 @@ public class LevelManager : MonoBehaviour {
     string textTimer;
 
     public bool deadPlayer;
+
+    GameObject goal;
     
     void Awake ()
     {
         spawn = GameObject.FindGameObjectWithTag("Spawn");
         track = GameObject.FindGameObjectWithTag("Track");
+        goal = GameObject.FindGameObjectWithTag("Goal");
         startTimer = false;
         deadPlayer = false;
         AIcarNumber = 0;
@@ -136,8 +139,11 @@ public class LevelManager : MonoBehaviour {
         string textMilliseconds = "000" + milliseconds.ToString();
         textMilliseconds = textMilliseconds.Substring(textMilliseconds.Length - 3);
 
-
-        gameTimer.GetComponent<Text>().text = textMinutes + ":" + textSeconds + ":" + textMilliseconds;
+        if(!goal.GetComponent<Goal>().gameDone)
+        {
+            gameTimer.GetComponent<Text>().text = textMinutes + ":" + textSeconds + ":" + textMilliseconds;
+        }
+        
 
     }
 

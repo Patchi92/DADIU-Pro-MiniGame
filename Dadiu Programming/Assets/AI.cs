@@ -215,8 +215,11 @@ public class AI : MonoBehaviour {
     {
         if(other.tag == "Player")
         {
-            //hostile = true;
-            //passive = false;
+            if(player.GetComponent<PlayerControl>().position == "1st")
+            {
+                hostile = true;
+                passive = false;
+            }
         }
         
     }
