@@ -8,7 +8,7 @@ public abstract class PickupAbstract: MonoBehaviour
 
     protected PlayerControl playerControl;
     //abstract Sprite GetSprite();
-    public float boost = 1f;
+    public float boost = 0.5f;
     public int healthRepair = 10;
 
     public Sprite sprite;
