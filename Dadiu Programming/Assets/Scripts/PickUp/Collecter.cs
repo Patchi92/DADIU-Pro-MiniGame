@@ -9,6 +9,7 @@ public class Collecter : MonoBehaviour {
     Image powerUp1;
     Image powerUp2;
     Image powerUp3;
+	PlayerControl playerControl;
 
     private int currentCounter = 0;
 
@@ -21,6 +22,7 @@ public class Collecter : MonoBehaviour {
         sprites.Add(powerUp2);
         sprites.Add(powerUp3);
 
+		playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
 
     }
     public void Update()
@@ -34,7 +36,15 @@ public class Collecter : MonoBehaviour {
 
             resetUIPowerUp();
             Debug.Log("Pick up used");
+
         }
+
+		if (collectibleQueue.Count == 0) {
+
+			playerControl.FunkyTimeStop ();
+		}
+
+
     }
 
     void OnTriggerEnter(Collider col)
@@ -48,6 +58,7 @@ public class Collecter : MonoBehaviour {
             resetUIPowerUp();
             //Debug.Log(powerUp1.name);
 
+			playerControl.FunkyTime ();
         }
     }
 
@@ -68,4 +79,6 @@ public class Collecter : MonoBehaviour {
             sprites[i].sprite = null;
         }
     }
+
+
 }

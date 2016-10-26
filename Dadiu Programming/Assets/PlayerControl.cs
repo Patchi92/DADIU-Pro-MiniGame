@@ -189,12 +189,12 @@ public class PlayerControl : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                FunkyTime();
+                //FunkyTime();
             }
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                FunkyTimeStop();
+                //FunkyTimeStop();
             }
 
             if (Input.GetKeyDown(KeyCode.R))
