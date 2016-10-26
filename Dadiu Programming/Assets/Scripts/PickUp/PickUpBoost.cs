@@ -11,6 +11,8 @@ public class PickUpBoost : PickupAbstract, PickUpAction
     public void activation()
     {
         playerControl.accelerationSpeed += base.boost;
+		playerControl.moveSpeed += base.boost * 3;
+	
 
     }
 
