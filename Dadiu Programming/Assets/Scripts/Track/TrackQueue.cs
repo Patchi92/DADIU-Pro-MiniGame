@@ -139,6 +139,17 @@ class TrackQueue
         return turnQueue.Dequeue();
     }
 
+    public bool isPowerUp()
+    {
 
+        if (currentTrackLength % curveDivisor == 4)
+        {
+           
+            Debug.Log(currentTrackLength + "----" + curveDivisor);
+            return true;
+        }
+
+        return false;
+    }
 
 }

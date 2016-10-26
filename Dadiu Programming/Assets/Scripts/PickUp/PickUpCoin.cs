@@ -2,28 +2,19 @@
 using System.Collections;
 
 
-public class PickUpCoin : MonoBehaviour, PickUpAction
+public class PickUpCoin : PickupAbstract, PickUpAction
 {
-
-    public PickUpCoin()
-    {
-
-    }
-
     public void activation()
     {
-        print("COIN");
+        playerControl.health += base.healthRepair;
     }
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
     {
 
     }
+
+
 }

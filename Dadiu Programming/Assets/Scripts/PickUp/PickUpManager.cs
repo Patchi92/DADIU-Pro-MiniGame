@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
+
+
+
 
 
 public enum PickUpType
@@ -15,11 +19,16 @@ interface PickUpAction
 
 public class PickUpManager: MonoBehaviour
 {
+    public Sprite SPEED_BOOST_SPRITE;
+    public Sprite COIN_SPRITE;
+    public Sprite WEAPON_SPRITE;
+
+
 
     public GameObject prefab;
 
     public int pickUpCount;
-    List<GameObject> list = new List<GameObject>();
+    public List<GameObject> list = new List<GameObject>();
 
 	// Use this for initialization
 	void Start () {
@@ -35,7 +44,7 @@ public class PickUpManager: MonoBehaviour
             return;
         }
         
-        for (int i = 0; i< 1; i++)
+        for (int i = 0; i< pickUpCount; i++)
         {
             float val = Random.Range(0, 3);
             PickUpType type = (PickUpType) val;
@@ -45,23 +54,26 @@ public class PickUpManager: MonoBehaviour
             switch (type)
             {
                 case PickUpType.BOOST:
-                    pickup = Instantiate(prefab, Vector3.one, Quaternion.identity) as GameObject;
+                    pickup = Instantiate(prefab, new Vector3(1,0,0), prefab.transform.rotation) as GameObject;
                     pickup.SetActive(true);
-
+                    
                     pickup.AddComponent<PickUpBoost>();
+                    pickup.GetComponent<PickUpBoost>().sprite = SPEED_BOOST_SPRITE;
 
                     break;
                 case PickUpType.WEAPON:
-                    pickup = Instantiate(prefab, Vector3.one, Quaternion.identity) as GameObject;
+                    pickup = Instantiate(prefab, new Vector3(1, 0, 0), prefab.transform.rotation) as GameObject;
 
                     pickup.AddComponent<PickUpWeapon>();
                     pickup.SetActive(true);
+                    pickup.GetComponent<PickUpWeapon>().sprite = WEAPON_SPRITE;
                     break;
                 default:
-                    pickup = Instantiate(prefab, Vector3.one, Quaternion.identity) as GameObject;
+                    pickup = Instantiate(prefab, new Vector3(1, 0, 0), prefab.transform.rotation) as GameObject;
 
                     pickup.AddComponent<PickUpCoin>();
                     pickup.SetActive(true);
+                    pickup.GetComponent<PickUpCoin>().sprite = COIN_SPRITE;
                     break;
             }
 
@@ -70,11 +82,20 @@ public class PickUpManager: MonoBehaviour
 
         foreach(GameObject pickUp in list) {
             
-            //Debug.Log();
+            Debug.Log(pickUp);
         }
 
     }
-	
+	public GameObject getPowerUp()
+    {
+        Debug.Log("PICKUP COUNT: " + pickUpCount);
+        pickUpCount--;
+        if (pickUpCount < 0)
+        {
+            return null;
+        }
+        return list[pickUpCount];
+    }
 	// Update is called once per frame
 	void Update () {
 	

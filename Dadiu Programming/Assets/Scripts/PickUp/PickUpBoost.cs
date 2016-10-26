@@ -2,28 +2,24 @@
 using System.Collections;
 
 
-public class PickUpBoost : MonoBehaviour, PickUpAction {
+public class PickUpBoost : PickupAbstract, PickUpAction
+{
 
-    public float boost = 5f;
+    //public float boost = 5f;
 
-    public PickUpBoost()
-    {
-        
-    }
 
     public void activation()
     {
-        print("BOOST");
-        
+        playerControl.accelerationSpeed += base.boost;
+
     }
 
-    // Use this for initialization
-    void Start () {
-	
-	}
+
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
+
+
 }

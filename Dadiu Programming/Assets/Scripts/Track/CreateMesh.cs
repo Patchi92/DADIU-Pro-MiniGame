@@ -78,7 +78,7 @@ public class CreateMesh : MonoBehaviour {
     {
         Move v = TrackMovement.MoveForward(currentPos);
         addCube(v.start, v.end);
-        Debug.Log("Strat: " + v.start + " -  End: " + v.end);
+        //Debug.Log("Strat: " + v.start + " -  End: " + v.end);
         currentPos.z += TrackMovement.step;
         return currentPos;
     }
@@ -106,7 +106,7 @@ public class CreateMesh : MonoBehaviour {
 
         Move v = TrackMovement.MoveLeft(currentPos);
         addCube(v.start, v.end);
-        Debug.Log("Strat: " + v.start + " -  End: " + v.end);
+        //Debug.Log("Strat: " + v.start + " -  End: " + v.end);
         currentPos.x -= TrackMovement.step;
         return currentPos;
     }
@@ -123,13 +123,16 @@ public class CreateMesh : MonoBehaviour {
         {
             currentPos = this.moveForward(currentPos);
         }
-        
-
-
+       
         for (i = 0; i < trackLength; i++)
         {
             Curbe curbe = trackQueue.GenerateNextMove();
-            Debug.Log(curbe);
+
+            if (trackQueue.isPowerUp())
+            {
+                //managerReference.getPowerUp().transform.position = currentPos;
+            }
+            //Debug.Log(curbe);
             switch (curbe)
             {
                 case Curbe.FORWARD:
@@ -177,7 +180,7 @@ public class CreateMesh : MonoBehaviour {
         return mesh;
 
     }
-
+    PickUpManager managerReference;
     void Start()
     {
         //set variables
@@ -188,8 +191,9 @@ public class CreateMesh : MonoBehaviour {
         trackQueue.StartGenerating();
 
         //no other way to access the method in pickupmanager ?????
+
         GameObject pickUpManager = GameObject.Find("PickUpManager");
-        PickUpManager managerReference = (PickUpManager)pickUpManager.GetComponent(typeof(PickUpManager));
+        managerReference = (PickUpManager)pickUpManager.GetComponent(typeof(PickUpManager));
         managerReference.Generate();
 
         
