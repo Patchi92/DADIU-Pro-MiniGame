@@ -35,6 +35,8 @@ public class PlayerControl : MonoBehaviour
     public GameObject smoke;
     public GameObject deathEffect;
     bool death;
+    
+    public GameObject Projectile;
 
     void Awake()
     {
