@@ -14,8 +14,6 @@ public abstract class PickupAbstract: MonoBehaviour
     public Sprite sprite;
 
 
-    public PickupAbstract() { Debug.Log("abstraacted"); }
-
     //public abstract Sprite GetSprite();
     public Sprite GetSprite()
     {
