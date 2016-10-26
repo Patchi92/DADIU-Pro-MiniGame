@@ -9,6 +9,9 @@ public class PlayerControl : MonoBehaviour
     Transform carTransfrom;
     Renderer rend;
 
+    GameObject goal;
+    GameObject ui;
+
     public GameObject cam;
     public GameObject camBack;
     public Shader vertexAni;
@@ -42,7 +45,9 @@ public class PlayerControl : MonoBehaviour
         death = true;
         health = 100;
         gear = "N";
-        position = "1st";
+        position = "8th";
+        goal = GameObject.FindGameObjectWithTag("Goal");
+        ui = GameObject.FindGameObjectWithTag("UI");
     }
 
 
@@ -239,6 +244,9 @@ public class PlayerControl : MonoBehaviour
             if (death)
             {
                 Instantiate(deathEffect, gameObject.transform.position, Quaternion.identity);
+                goal.GetComponent<Goal>().gameDone = true;
+                ++goal.GetComponent<Goal>().carDestoryed;
+                ui.GetComponent<LevelManager>().deadPlayer = true;
                 StartCoroutine("Death");
                 death = false;
             }

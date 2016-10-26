@@ -22,12 +22,12 @@ public class Spawn : MonoBehaviour {
 
     public void SpawnCars ()
     {
-        Instantiate(player, startPos[0].position, Quaternion.identity);
+        Instantiate(player, startPos[7].position, Quaternion.identity);
         cars = cars - 1;
 
         for (int i = 0; i < cars; i++)
         {
-            Instantiate(carAI, startPos[i + 1].position, Quaternion.identity);
+            Instantiate(carAI, startPos[i].position, Quaternion.identity);
         }
     }
 }
