@@ -183,6 +183,7 @@ public class AI : MonoBehaviour {
             if (death)
             {
                 Instantiate(deathEffect, gameObject.transform.position, Quaternion.identity);
+                ++goal.GetComponent<Goal>().carDestoryed;
                 StartCoroutine("Death");
                 death = false;
             }
@@ -230,6 +231,12 @@ public class AI : MonoBehaviour {
     {
         passive = false;
         hostile = true;
+    }
+
+    public void Standby()
+    {
+        passive = false;
+        hostile = false;
     }
 
     public void FunkyTime()

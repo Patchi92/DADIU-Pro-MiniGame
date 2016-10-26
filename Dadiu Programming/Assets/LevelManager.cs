@@ -19,6 +19,8 @@ public class LevelManager : MonoBehaviour {
     public GameObject health;
     public GameObject speed;
     public GameObject gear;
+
+    public GameObject death;
     
 
     float showSpeed;
@@ -28,12 +30,15 @@ public class LevelManager : MonoBehaviour {
     float reduceTime;
     float timer;
     string textTimer;
+
+    public bool deadPlayer;
     
     void Awake ()
     {
         spawn = GameObject.FindGameObjectWithTag("Spawn");
         track = GameObject.FindGameObjectWithTag("Track");
         startTimer = false;
+        deadPlayer = false;
         AIcarNumber = 0;
         
     }
@@ -61,6 +66,10 @@ public class LevelManager : MonoBehaviour {
             gear.GetComponent<Text>().text = player.GetComponent<PlayerControl>().gear;
         }
         
+        if(deadPlayer)
+        {
+            death.SetActive(true);
+        }
 
     }
 
