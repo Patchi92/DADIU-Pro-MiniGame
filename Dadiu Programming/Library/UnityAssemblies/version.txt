@@ -1,5 +1,5 @@
 5.4.2f1:2.3.0.0
-StandaloneOSXIntel
+StandaloneWindows
 E:/Unity/Editor/Data/Managed/UnityEngine.dll
 E:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll
 E:/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll
