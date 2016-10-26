@@ -56,20 +56,11 @@ public class CreateMesh : MonoBehaviour {
 			Vector3 p3 = pStart+Vector3.forward*length+Vector3.right*length;
 			Vector3 p4 = pStart+Vector3.forward*length;
 			
-			//Vector3 p5 = pEnd-Vector3.forward*length-Vector3.right*length;
-			//Vector3 p6 = pEnd-Vector3.forward*length;
-			//Vector3 p7 = pEnd;
-			//Vector3 p8 = pEnd-Vector3.right*length;
+
 			
 			addQuad(p1,p4,p3,p2);
-        //addQuad(p1, p2, p3, p4);
         addQuad(p2, p3, p4, p1);
 
-        //addQuad(p7,p6,p2,p3);
-        //addQuad(p7,p3,p4,p8);
-        //addQuad(p1,p5,p8,p4);
-        //addQuad(p1,p2,p6,p5);
-        //addQuad(p7,p8,p5,p6);
         return;
 		}
 
@@ -196,11 +187,12 @@ public class CreateMesh : MonoBehaviour {
         managerReference = (PickUpManager)pickUpManager.GetComponent(typeof(PickUpManager));
         managerReference.Generate();
 
-        
+		//Abandon all hope you who enter here
+       /* 
         Mesh mesh = CreateMengerSponge();
         GetComponent<MeshFilter>().mesh = mesh;
         MeshCollider meshc = gameObject.AddComponent(typeof(MeshCollider)) as MeshCollider;
         meshc.sharedMesh = mesh;
-        
+        */
     }
 }
